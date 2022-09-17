@@ -1,14 +1,19 @@
+## Docker Build and Push Stage
+## replace  siddharth67 with your dockerhub username
+
 pipeline {
   agent any
 
   stages {
-      stage('Build Artifact') {
-            steps {
-              sh "mvn clean package -DskipTests=true"
-              archive 'target/*.jar' //so that they can be downloaded later
-            }
-        }   
-      stage('Unit Tests - JUnit and Jacoco') {
+
+    stage('Build Artifact - Maven') {
+      steps {
+        sh "mvn clean package -DskipTests=true"
+        archive 'target/*.jar'
+      }
+    }
+
+    stage('Unit Tests - JUnit and Jacoco') {
       steps {
         sh "mvn test"
       }
@@ -19,5 +24,15 @@ pipeline {
         }
       }
     }
+
+    stage('Docker Build and Push') {
+      steps {
+        withDockerRegistry([credentialsId: "docker-hub", url: ""]) {
+          sh 'printenv'
+          sh 'docker build -t rveeranki06/numeric-app:""$GIT_COMMIT"" .'
+          sh 'docker push rveeranki06/numeric-app:""$GIT_COMMIT""'
+        }
+      }
     }
+  }
 }
