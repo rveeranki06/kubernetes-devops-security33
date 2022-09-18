@@ -54,7 +54,7 @@ pipeline {
       }
     }
     
-    stage ('Image Scan") {
+    stage ('Trivy Image Scan) {
            steps {
            sh "bash trivy-docker-image-scan.sh"
            }
