@@ -43,7 +43,7 @@ pipeline {
         }
       }
   }
-    stage('Vulnerability Scan - Docker ') {
+    stage('Maven Dependency Scan - Docker ') {
       steps {
         sh "mvn dependency-check:check"
       }
