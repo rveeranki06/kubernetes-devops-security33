@@ -15,4 +15,4 @@ docker run --rm -v $WORKSPACE:/root/.cache/ aquasec/trivy:0.21.1 -q image --exit
         exit 1;
     else
         echo "Image scanning passed. No CRITICAL vulnerabilities found"
-    fi;
+    fi
